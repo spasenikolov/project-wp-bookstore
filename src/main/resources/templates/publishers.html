@@ -1,0 +1,26 @@
+<th:block xmlns:th="http://www.thymeleaf.org">
+    <div class="container mb-4">
+        <div class="row">
+            <div class="col-12" th:if="${publishers.size()>0}">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Address</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="pub : ${publishers}" class="category">
+                            <td th:text="${pub.getName()}"></td>
+                            <td th:text="${pub.getAddress()}"></td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>

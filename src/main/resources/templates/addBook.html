@@ -1,0 +1,92 @@
+<th:block xmlns:th="http://www.thymeleaf.org">
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+            <form action = "/books/add" method="post">
+                <div class="form-group d-none">
+                    <label>Old product name</label>
+                    <input type="text"
+                           class="form-control"
+                           id="oldName"
+                           name="oldName"
+                           th:value="(${book}!=null ? ${book.name} : '')"
+                           required
+                           placeholder="Old name">
+                </div>
+                <div class="form-group">
+                    <label>Product name</label>
+                    <input type="text"
+                           class="form-control"
+                            id="name"
+                            name="name"
+                            th:value="(${book}!=null ? ${book.name} : '')"
+                            required
+                            placeholder="Enter book name">
+                </div>
+                <div class="form-group">
+                    <label>Price</label>
+                    <input type="text"
+                           class="form-control"
+                           id="price"
+                           name="price"
+                           th:value="(${book}!=null ? ${book.getPrice()} : '')"
+                           required
+                           placeholder="Enter price">
+                </div>
+                <div class="form-group">
+                    <label>Quantity</label>
+                    <input type="text"
+                           class="form-control"
+                           id="quantity"
+                           name="quantity"
+                           th:value="(${book}!=null ? ${book.getQuantity()} : '')"
+                           required
+                           placeholder="Enter quantity">
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select name="category" class="form-control">
+                        <option th:if = "${book} != null"
+                                th:selected="${book.getCategory() != null
+                                 && book.getCategory().getId() == cat.getId()} "
+                                th:each="cat : ${categories}"
+                                th:text="${cat.getName()}"
+                                th:value="${cat.getId()}">
+                        </option>
+                        <option th:if = "${book} == null"
+
+                                th:each="cat : ${categories}"
+                                th:text="${cat.getName()}"
+                                th:value="${cat.getId()}">
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Publishing House</label>
+                    <select name="publishingHouse" class="form-control">
+                        <option th:if = "${book} != null"
+                                th:selected="${book.getPublishingHouse() != null
+                                 && book.getPublishingHouse().getId() == pub.getId()} "
+                                th:each="pub : ${publishingHouses}"
+                                th:text="${pub.getName()}"
+                                th:value="${pub.getId()}">
+                        </option>
+                        <option th:if = "${book} == null"
+
+                                th:each="pub : ${publishingHouses}"
+                                th:text="${pub.getName()}"
+                                th:value="${pub.getId()}">
+                        </option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" type="submit">Submit</button>
+                <a type="button" class="btn btn-primary" href="/books">Back</a>
+            </form>
+
+
+        </div>
+
+    </div>
+
+</div>
+</th:block>

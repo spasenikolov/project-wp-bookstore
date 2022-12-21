@@ -1,0 +1,53 @@
+<th:block xmlns:th="http://www.thymeleaf.org">
+<div>
+
+    <div th:if = "${hasError}">
+        <h5 class="text-center text-danger" th:text="${error}"></h5>
+    </div>
+
+    <div class="container mb-4">
+        <div class="row">
+            <div class="w-70 mx-auto">
+                <h4>SHOPPING CART</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12" th:if="${books.size() > 0}">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Book name</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Publishing House</th>
+                            <th scope="col">Category</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="book : ${books}" class="book">
+                            <td th:text="${book.getName()}"></td>
+                            <td th:text="${book.getPrice()}"></td>
+                            <td th:text="${book.getPublishingHouse() != null}
+                            ? ${book.getPublishingHouse().getName()} : 'No Manufacturer'"></td>
+                            <td th:text="${book.getCategory() != null}
+                            ? ${book.getCategory().getName()} : 'No Category'"></td>
+                            <td>
+                                <form th:method="delete" th:action="@{'/shopping-cart/delete-book/{id}' (id=${book.getId()})}">
+                                    <button type="submit" class="btn btn-sm btn-danger">
+                                        <i class="fa fa-trash">Delete</i>
+                                    </button>
+                                </form>
+                            </td>
+
+                        </tr>
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</th:block>

@@ -1,0 +1,35 @@
+*{
+    font-family: Axiforma, Cambria, Georgia, Times, 'Times New Roman', serif;
+}
+
+div .error{
+    color:red;
+}
+.navbar-light .navbar-nav .nav-link{
+    color: black;
+
+}
+
+body{
+    background-image: url("images/background21transparent.png");
+    height: 100%;
+    background-position: center;
+
+    background-size: cover;
+
+}
+.w-100 {
+    width: 100% !important;
+    height: 30vh;
+}
+.bg-transparent.scrolled{
+
+    transition: 0.5s;
+    background-color: rgba(255, 255, 255, 0.8) !important;
+}
+.bg-white-transparent{
+    background-color: rgba(255, 255, 255, 0.6) !important;
+}
+
+
+

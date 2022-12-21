@@ -1,0 +1,31 @@
+<th:block xmlns:th="http://www.thymeleaf.org">
+<div class="container mb-4">
+    <div class="row">
+        <div class="w-70 mx-auto">
+            <h4>CATEGORIES</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12" th:if="${categories.size() > 0}">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Description</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="cat : ${categories}" class="category">
+                        <td th:text="${cat.getName()}"></td>
+                        <td th:text="${cat.getDescription()}"></td>
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</th:block>

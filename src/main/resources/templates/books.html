@@ -1,0 +1,77 @@
+    <th:block xmlns:th="http://www.thymeleaf.org">
+
+    <div class="container mb-4">
+        <div class="row mb-4">
+            <form class="form-inline my-2 my-lg-0 ml-5">
+                <div class="input-group input-group-sm">
+                    <input type="text" class="form-control" aria-label="Small"
+                           aria-describedby="inputGroup-sizing-sm"
+                           placeholder="Search...">
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-secondary btn-number">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="row">
+            <div class="col-12" th:if="${books.size() > 0}">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Book name</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Publishing House</th>
+                            <th scope="col">Category</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="book : ${books}" class="book">
+                            <td> <img th:src="@{images/book-placeholder.jpg}" class="mx-auto d-block img-thumbnail w-50">
+                            </td>
+                            <td th:text="${book.getName()}"></td>
+                            <td th:text="${book.getPrice()}"></td>
+                            <td th:text="${book.getPublishingHouse() != null}
+                            ? ${book.getPublishingHouse().getName()} : 'No Publishing House'"></td>
+                            <td th:text="${book.getCategory() != null}
+                            ? ${book.getCategory().getName()} : 'No Category'"></td>
+                            <td class="text-right">
+                                <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                                <form th:method="delete" th:action="@{'/books/delete/{id}' (id=${book.getId()})}">
+                                    <button type="submit" class="btn btn-sm btn-danger">
+                                       <i class="fa fa-trash">Delete</i>
+                                    </button>
+                                </form>
+                                </th:block>
+                                <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                                <a class="btn btn-sm btn-info"th:href="@{'/books/edit-form/{id}' (id=${book.getId()})}">
+                                    <i class="fa fa-trash">Edit</i> </a>
+                                </th:block>
+                                <form th:method="post" th:action="@{'/shopping-cart/add-book/{id}' (id=${book.getId()})}">
+                                    <button type="submit" class="btn btn-sm btn-primary">
+                                        <i class="fa fa-trash">Add book to cart</i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col mb-3">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12">
+                        <a href="/books/add-form" class="btn btn-block btn-dark add-book-btn">
+                            Add new book
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </th:block>

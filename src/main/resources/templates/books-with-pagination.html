@@ -1,0 +1,126 @@
+<div class="container mb-4">
+    <div class="row">
+        <div class="w-70 mx-auto">
+        <h4>SHOWING ALL BOOKS</h4>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-3">
+        <form class="form-inline my-2 my-lg-0 ml-5">
+            <div class="input-group input-group-sm">
+                <input type="text" class="form-control" aria-label="Small"
+                       aria-describedby="inputGroup-sizing-sm"
+                       placeholder="Search...">
+                <div class="input-group-append">
+                    <button type="button" class="btn btn-secondary btn-number">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+        </div>
+            <div class="col-3">
+            </div>
+
+            <div class="col-2">
+                <form th:action="@{/listBooks(size=${size}, page=${page})}">
+                <select  th:name="ordering" id="ordering" class="custom-select">
+                    <option selected>Order By</option>
+                    <option value="name">Name</option>
+                    <option value="price">Price</option>
+                </select>
+            </div>
+        <div class="col-2">
+
+            <select  th:name="category" id="category" class="custom-select">
+                <option selected value="">Category</option>
+                <option th:each="cat: ${listCategories}" th:value="${cat.name}" th:text="${cat.name}"></option>
+            </select>
+        </div>
+        <div class="col-1">
+                <input class="btn btn-light btn-md mr-3" name="submit" type="submit" value="Find books" />
+            </form>
+            </div>
+        </div>
+
+    <div class="row">
+        <div class="col-12" th:if="${books.size() > 0}">
+            <div class="table-responsive bg-white-transparent">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Book name</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Publishing House</th>
+                        <th scope="col">Category</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="book, iStat : ${bookPage.content}" class="book">
+                        <td> <img th:src="@{${'/images/' + book.name + '.jpg'}}"  class="mx-auto d-block img-thumbnail w-50">
+                        </td>
+                        <td th:text="${book.getName()}"></td>
+                        <td th:text="${book.getPrice()}"></td>
+                        <td th:text="${book.getPublishingHouse() != null}
+                            ? ${book.getPublishingHouse().getName()} : 'No Publishing House'"></td>
+                        <td th:text="${book.getCategory() != null}
+                            ? ${book.getCategory().getName()} : 'No Category'"></td>
+                        <td class="text-right">
+                            <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                                <form th:method="delete" th:action="@{'/books/delete/{id}' (id=${book.getId()})}">
+                                    <button type="submit" class="btn btn-sm btn-danger">
+                                        <i class="fa fa-trash">Delete</i>
+                                    </button>
+                                </form>
+                            </th:block>
+                            <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                                <a class="btn btn-sm btn-info"th:href="@{'/books/edit-form/{id}' (id=${book.getId()})}">
+                                    <i class="fa fa-trash">Edit</i> </a>
+                            </th:block>
+                            <form th:method="post" th:action="@{'/shopping-cart/add-book/{id}' (id=${book.getId()})}">
+                                <button type="submit" class="btn btn-sm btn-link">
+                                    <i class="fa fa-trash">Add book to cart</i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+
+
+                    </tbody>
+                </table>
+
+
+            </div>
+            <div class="row">
+                <div class="w-80 mx-auto">
+                <nav aria-label="Page navigation example" th:if="${bookPage.totalPages > 0}">
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                        <th:block th:each="pageNumber : ${pageNumbers}">
+                            <li class="page-item">
+                                <a class="page-link active" th:href="@{/listBooks(size=${bookPage.size}, page=${pageNumber})}" th:text="${pageNumber}"></a>
+                            </li>
+                        </th:block>
+                        <li class="page-item"><a class="page-link" th:href="@{/listBooks(size=${bookPage.size}, page=${pageNumber})}">Next</a></li>
+                    </ul>
+                </nav>
+            </div>
+            </div>
+        </div>
+
+        <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+        <div class="col mb-3">
+            <div class="row">
+                <div class="col-sm-12 col-md-12">
+                    <a href="/books/add-form" class="btn btn-block btn-dark add-book-btn">
+                        Add new book
+                    </a>
+                </div>
+            </div>
+        </div>
+        </th:block>
+    </div>
+</div>
+</th:block>
